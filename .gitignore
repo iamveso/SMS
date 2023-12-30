@@ -1,0 +1,6 @@
+# Adding the sql scripts publicly for now.
+# sql/
+
+.vscode/
+package-lock.json
+node_modules/
