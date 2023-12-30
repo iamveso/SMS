@@ -8,9 +8,11 @@ export class Student {
       lastname,
       level,
       dob,
-      program_id,
-      department_id,
       email,
+      age,
+      program_name,
+      department_name,
+      enrolled_courses,
     }) {
 
       //Properties
@@ -20,10 +22,11 @@ export class Student {
       this.lastname = lastname;
       this.level = level;
       this.dob = dob;
-      this.program_id = program_id;
-      this.department_id = department_id;
+      this.program_name = program_name;
+      this.department_name = department_name;
       this.email = email;
-
+      this.age = age;
+      this.enrolled_courses = enrolled_courses;
 
       //Methods
       this._getStudentID = () => _student_id;  
