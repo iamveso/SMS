@@ -36,3 +36,28 @@ export class Student {
       return Object.freeze({id: this._getStudentID()})
     }
   }
+
+  export class EnrollmentData {
+    constructor({
+      student_id,
+      course_id,
+      enrollment_date,
+      semester
+    }){
+      this.student_id = student_id;
+      this.course_id = course_id;
+      this.enrollment_date = enrollment_date;
+      this.semester = semester;
+    }
+
+    isSet() { //This assumes no id can be 0 and semester CANNOT be an empty string
+      return this.student_id && this.course_id && this.enrollment_date && this.semester;
+    }
+    verifySemester() {
+      if(this.semester == "First" || this.semester == "Second"){
+        return true;
+      }else{
+        false;
+      }
+    }
+  }

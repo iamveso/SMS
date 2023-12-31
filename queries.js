@@ -36,3 +36,8 @@ WHERE matric_no = $1
 GROUP BY
 ${STUDENT_TABLE_NAME}.student_id, ${PROGRAM_TABLE_NAME}.program_name, 
 ${DEPARTMENT_TABLE_NAME}.department_name`;
+
+// export const query_enroll_for_course = `INSERT INTO ${ENROLLMENT_TABLE_NAME} (student_id, course_id, enrollment_date, semester)
+// VALUES ($1,$2,$3,$4)`
+
+// export const query_enroll_multiple = `INSERT INTO ${ENROLLMENT_TABLE_NAME} VALUES (DEFAULT, $1) RETURNING *`;

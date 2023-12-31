@@ -2,6 +2,7 @@
 
 
 -- Courses Table
+--TODO: Alter table to make course codes unique
 CREATE TABLE IF NOT EXISTS courses (
     course_id SERIAL PRIMARY KEY,
     course_name VARCHAR(100),
