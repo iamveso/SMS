@@ -2,7 +2,7 @@ import express from 'express';
 import 'dotenv/config';
 import pg from 'pg';
 import { pool } from './dbPool.js';
-import { query_all_students, query_enroll_for_course, query_enroll_multiple, query_student_by_matric } from './queries.js';
+import { query_all_students, query_student_by_matric } from './queries.js';
 import { EnrollmentData, Student } from './models.js';
 
 const API_VERSION = "api/v1";
