@@ -41,3 +41,22 @@ ${DEPARTMENT_TABLE_NAME}.department_name`;
 // VALUES ($1,$2,$3,$4)`
 
 // export const query_enroll_multiple = `INSERT INTO ${ENROLLMENT_TABLE_NAME} VALUES (DEFAULT, $1) RETURNING *`;
+export const query_register_student = `INSERT INTO ${STUDENT_TABLE_NAME} (
+    matric_no,
+    firstname,
+    lastname,
+    level,
+    dob,
+    program_id,
+    department_id,
+    email
+) VALUES (
+    $1,
+    $2,
+    $3,
+    $4,
+    $5,
+    $6,
+    $7,
+    $8
+)`;

@@ -45,3 +45,9 @@ CREATE TABLE IF NOT EXISTS enrollments (
     semester VARCHAR(20),
     CONSTRAINT valid_semester CHECK (semester IN ('First', 'Second'))
 );
+
+-- ALTER TABLE courses 
+-- ADD CONSTRAINT unique_course_code UNIQUE (course_code);
+
+-- ALTER TABLE students
+-- ALTER COLUMN student_id SET DEFAULT uuid_generate_v4();
