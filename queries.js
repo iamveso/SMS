@@ -60,3 +60,6 @@ export const query_register_student = `INSERT INTO ${STUDENT_TABLE_NAME} (
     $7,
     $8
 )`;
+
+export const query_add_deparment = `INSERT INTO ${DEPARTMENT_TABLE_NAME} (department_name) VALUES ($1)`;
+export const query_add_program = `INSERT INTO ${PROGRAM_TABLE_NAME} (program_name, department_id) VALUES ($1,$2)`;

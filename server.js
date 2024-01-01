@@ -2,7 +2,7 @@ import express from "express";
 import "dotenv/config";
 import pg from "pg";
 import { pool } from "./dbPool.js";
-import { query_all_students, query_register_student, query_student_by_matric } from "./queries.js";
+import { query_add_deparment, query_add_program, query_all_students, query_register_student, query_student_by_matric } from "./queries.js";
 import { CourseData, EnrollmentData, Student } from "./models.js";
 
 const API_VERSION = "api/v1";
@@ -137,6 +137,37 @@ app.post(`/${ENROLLMENT_BASEAPI}/student`, async (req, res) => {
     }
   }
   res.sendStatus(201);
+});
+
+//Add a new department
+app.post(`/${ENROLLMENT_BASEAPI}/department`, async (req, res) => {
+    if (!req.body.department_name){
+        res.status(400).send("No Value Provided");
+        return;
+    }
+    try {
+        var result = await pool.query(query_add_deparment, [req.body.department_name]);
+    } catch (error) {
+        res.status(400).send(error.detail);
+        return;
+    }
+    res.sendStatus(201);
+});
+
+//Add a new rogram
+app.post(`/${ENROLLMENT_BASEAPI}/department/program`, async (req, res) => {
+    let r = req.body.department_id && req.body.program_name;
+    if (!r){
+        res.status(400).send("Missing Value for Field(s)");
+        return;
+    }
+    try {
+        var result = await pool.query(query_add_program, [req.body.program_name, req.body.department_id]);
+    } catch (error) {
+        res.status(400).send(error.detail);
+        return;
+    }
+    res.sendStatus(201);
 });
 
 app.listen(PORT, () => console.log(`App Running on port ${PORT}`));
