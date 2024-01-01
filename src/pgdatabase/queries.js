@@ -1,3 +1,5 @@
+import { pool } from "./index.js";
+
 const STUDENT_TABLE_NAME = "students";
 const PROGRAM_TABLE_NAME = "programs";
 const DEPARTMENT_TABLE_NAME = "departments";
@@ -20,6 +22,7 @@ GROUP BY
 ${STUDENT_TABLE_NAME}.student_id, ${PROGRAM_TABLE_NAME}.program_name, 
 ${DEPARTMENT_TABLE_NAME}.department_name`;
 
+
 export const query_student_by_matric = `SELECT
 ${STUDENT_TABLE_NAME}.*,
 ${PROGRAM_TABLE_NAME}.program_name,
@@ -37,29 +40,22 @@ GROUP BY
 ${STUDENT_TABLE_NAME}.student_id, ${PROGRAM_TABLE_NAME}.program_name, 
 ${DEPARTMENT_TABLE_NAME}.department_name`;
 
-// export const query_enroll_for_course = `INSERT INTO ${ENROLLMENT_TABLE_NAME} (student_id, course_id, enrollment_date, semester)
-// VALUES ($1,$2,$3,$4)`
 
-// export const query_enroll_multiple = `INSERT INTO ${ENROLLMENT_TABLE_NAME} VALUES (DEFAULT, $1) RETURNING *`;
-export const query_register_student = `INSERT INTO ${STUDENT_TABLE_NAME} (
-    matric_no,
-    firstname,
-    lastname,
-    level,
-    dob,
-    program_id,
-    department_id,
-    email
-) VALUES (
-    $1,
-    $2,
-    $3,
-    $4,
-    $5,
-    $6,
-    $7,
-    $8
-)`;
-
-export const query_add_deparment = `INSERT INTO ${DEPARTMENT_TABLE_NAME} (department_name) VALUES ($1)`;
-export const query_add_program = `INSERT INTO ${PROGRAM_TABLE_NAME} (program_name, department_id) VALUES ($1,$2)`;
+export const dbUpdateStudentInfo = async (student) => {
+    if(student === null || student === undefined){
+        console.log(`Object = [${student}]`);
+        return undefined;
+    }
+    const columns = Object.keys(student).filter((key) => student[key] !== undefined && key !== "matric_no" && typeof student[key] !== 'function');
+    const values = columns.map((key, index) => `$${index + 1}`);
+    const queryStatement = `UPDATE students
+        SET ${columns.map((col, index) => `${col} = ${values[index]}`).join(', ')}
+        WHERE matric_no = $${columns.length + 1}
+        RETURNING *`;
+    
+    const queryValues = [...values, student.matric_no];
+    const result = pool.query(queryStatement, queryValues);
+    console.log(queryValues);
+    console.log(queryStatement);
+    return result;
+}
