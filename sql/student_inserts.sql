@@ -20,7 +20,7 @@
 --     'chiagoro.ahaotu@school.edu.ng'
 -- );
 
--- SELECT * FROM students;
+SELECT * FROM students;
 
 -- SELECT
 --     students.*,

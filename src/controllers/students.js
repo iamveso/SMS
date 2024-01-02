@@ -1,5 +1,5 @@
 import { pool } from "../pgdatabase/index.js";
-import { dbUpdateStudentInfo, query_all_students, query_student_by_matric } from "../pgdatabase/queries.js";
+import { get_student, soft_delete_student} from "../pgdatabase/queries.js";
 
 class Student {
   constructor({
@@ -59,16 +59,35 @@ export const getAllStudents = async (req, res) => {
 };
 
 export const getStudentByMatricNo = async (req, res) => {
-  const result = await pool.query(query_student_by_matric, [req.params.mat_no.toUpperCase()]);
-  console.log(result.rows);
-  if (!result.rows || result.rowCount < 1) {
-    res.status(404).send(`student with mat no ${req.params.mat_no} not Found`);
+  try {
+    const result = await pool.query(get_student, [req.params.mat_no.toUpperCase()]);
+    if (!result.rows || result.rowCount < 1) {
+      res.status(404).send(`student with mat no ${req.params.mat_no} not Found`);
+      return;
+    }
+    const studentObjects = result.rows.map((row) => row);
+    res.json(studentObjects[0])
+  } catch (error) {
+    res.status(400).send(error.hint || error.detail);
     return;
   }
-  const studentObjects = result.rows.map((row) => row);
-  res.json(studentObjects[0])
 }
 
 export const updateStudentInfo =  async (req, res) => {
   
+}
+
+export const deleteStudent = async (req, res) => {
+  try {
+    const result = await pool.query(soft_delete_student, [req.params.mat_no.toUpperCase()]);
+    if (!result.rows || result.rowCount < 1) {
+      res.status(404).send(`student with mat no ${req.params.mat_no} not Found`);
+      return;
+    }
+    const studentObjects = result.rows.map((row) => row);
+    res.json(studentObjects[0])
+  } catch (error) {
+    res.status(400).send(error.detail || error.hint)
+    return;
+  }
 }

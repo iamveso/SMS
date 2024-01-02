@@ -1,6 +1,6 @@
 import express from "express";
 import { getAllStudents } from "../controllers/students.js";
-import { getStudentByMatricNo } from "../controllers/students.js";
+import { getStudentByMatricNo, deleteStudent } from "../controllers/students.js";
 import { updateStudentInfo } from "../controllers/students.js";
 
 const router = express.Router();
@@ -15,7 +15,7 @@ router.post("/register", (req,res) => {});
 router
   .route("/:mat_no")
   .get(getStudentByMatricNo)
-  .delete((req, res) => {})
+  .delete(deleteStudent)
   .put(updateStudentInfo);
 /*Update student information */
 

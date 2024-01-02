@@ -6,7 +6,7 @@
 CREATE TABLE IF NOT EXISTS courses (
     course_id SERIAL PRIMARY KEY,
     course_name VARCHAR(100),
-    course_code VARCHAR(20),
+    course_code VARCHAR(20) UNIQUE,
     required_level INT,
     units INT
 );
@@ -51,3 +51,10 @@ CREATE TABLE IF NOT EXISTS enrollments (
 
 -- ALTER TABLE students
 -- ALTER COLUMN student_id SET DEFAULT uuid_generate_v4();
+
+-- ALTER TABLE students
+-- ADD COLUMN isDeleted BOOLEAN DEFAULT false;
+
+-- UPDATE students
+-- SET isDeleted = false
+-- WHERE isDeleted IS NULL;
