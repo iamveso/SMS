@@ -17,8 +17,5 @@ router
   .get(getStudentByMatricNo)
   .delete(deleteStudent)
   .put(updateStudentInfo);
-/*Update student information */
-
-/*Delete a student from the database. Soft delete */
 
 export default router;
