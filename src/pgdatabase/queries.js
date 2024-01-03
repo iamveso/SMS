@@ -69,3 +69,14 @@ export const update_student = (studentObject) => {
     console.log(query);
     return query;
 }
+
+export const insert_student = (studentObject) => {
+    const keys = Object.keys(studentObject);
+    const values = Object.values(studentObject);
+    const query = `
+        INSERT INTO students (${keys.join(', ')})
+        VALUES (${values.map((value, index) => `$${index + 1}`).join(', ')})`;
+    
+    console.log(query);
+    return {query, values};
+}

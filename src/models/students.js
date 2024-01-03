@@ -28,8 +28,7 @@ export class StudentDetails{
         this.department_name = department_name;
         this.email = email;
         this.enrolled_courses = new Set(enrolled_courses);
-        this.reg_units = reg_units;
-
+        this.reg_units = reg_units || 0; //TODO: Not sure if I want this logic here permanently but it works for now
 
         this._getStudentID = () => _student_id;
         this._getDepartmentID = () => _department_id;
@@ -38,10 +37,9 @@ export class StudentDetails{
     }
 
     isPopulated(){ //is true if all values are truthy and false otherwise
-        return (_student_id 
-            && _department_id 
-            && _program_id 
-            && _matric_no
+        return (this._getDepartmentID() 
+            && this._getProgramID()
+            && this.getMatricNo()
             && this.firstname 
             && this.lastname 
             && this.level
@@ -51,7 +49,7 @@ export class StudentDetails{
             && this.department_name
             && this.email
             && this.enrolled_courses //Its allowed to be an empty array
-            && this.reg_units) ? true : false;
+            && this.reg_units !== undefined) ? true : false;
     }
 
     getStudentID(){
