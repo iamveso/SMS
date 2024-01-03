@@ -18,4 +18,8 @@ router
   .delete(deleteStudent)
   .put(updateStudentInfo);
 
+/*Expect only search by level, department and program, other queries will be ignored */
+/*Url Query should look something like /search?level=200&department=${department_id}&program=${program_id} */
+router.get("/search", getStudentByParams)
+
 export default router;

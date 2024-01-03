@@ -117,3 +117,8 @@ export const registerStudent = async (req, res) => {
     return;
   }
 };
+
+
+export const getStudentByParams = (queryParams) => {
+  //TODO:
+}
