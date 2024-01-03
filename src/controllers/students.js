@@ -1,5 +1,5 @@
 import { pool } from "../pgdatabase/index.js";
-import { get_student, soft_delete_student} from "../pgdatabase/queries.js";
+import { get_student, soft_delete_student, update_student} from "../pgdatabase/queries.js";
 
 class Student {
   constructor({
@@ -74,7 +74,22 @@ export const getStudentByMatricNo = async (req, res) => {
 }
 
 export const updateStudentInfo =  async (req, res) => {
-  
+    if(!req.body){
+      res.sendStatus(400);
+      return;
+    }
+    try {
+      const result = await pool.query(update_student(req.body), [req.params.mat_no.toUpperCase()]);
+      console.log(result.rowCount)
+      if (!result.rows || result.rowCount < 1) {
+        res.status(404).send(`student with mat no ${req.params.mat_no} not Found`);
+        return;
+      }
+      res.sendStatus(200);
+    } catch (error) {
+      res.status(400).send(error.detail || error.hint);
+      return;
+    }
 }
 
 export const deleteStudent = async (req, res) => {

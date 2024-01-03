@@ -55,3 +55,17 @@ LEFT JOIN
 WHERE
     s.matric_no = $1 AND isDeleted = false;
 `;
+
+export const update_student = (studentObject) => {
+    const setClause = Object.entries(studentObject)
+                            .filter(([key, value]) => value !== undefined && key != "matric_no")
+                            .map(([key, value]) => `${key} = '${value}'`)
+                            .join(', ');
+    console.log(setClause);
+    const query = 
+    `UPDATE students
+    SET ${setClause}
+    WHERE matric_no = $1;`;
+    console.log(query);
+    return query;
+}
