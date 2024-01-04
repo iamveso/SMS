@@ -1,6 +1,7 @@
 import { pool } from "../pgdatabase/index.js";
 import { StudentDetails as Student } from "../models/students.js";
 import {
+  fetchStudentsWithParams,
   get_student,
   insert_student,
   soft_delete_student,
@@ -119,6 +120,37 @@ export const registerStudent = async (req, res) => {
 };
 
 
-export const getStudentByParams = (queryParams) => {
-  //TODO:
+export const verifyQueryParams = (req, res, next) => {
+  const queryObject = {
+    level: req.query.level,
+    department_id: req.query.department_id,
+    program_id: req.query.program_id
+  };
+  console.log(queryObject);
+  if (!queryObject.level && !queryObject.department_id && !queryObject.program_id){
+    req.isDefined = false;
+    req.queryObj = undefined;
+  }else{
+    req.isDefined = true;
+    req.queryObj = queryObject;
+  }
+  next();
+}
+
+export const getStudentByParams = async (req, res) => {
+  if(req.isDefined === false){
+    res.status(400).send("Cannot Parse Important Info from query params");
+    return;
+  }
+  
+  try {
+    let {query, values} = fetchStudentsWithParams(req.queryObj);
+    console.log(query);
+    console.log(values);
+    const result = await pool.query(query, values);
+    res.status(200).json(result.rows);
+  } catch (error) {
+    res.status(400).send(error.detail || error.hint);
+    return;
+  }
 }

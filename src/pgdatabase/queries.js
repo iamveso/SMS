@@ -10,8 +10,7 @@ export const soft_delete_student = `
 UPDATE students
     SET isDeleted = true
     WHERE matric_no = $1;
-`
-
+`;
 
 export const get_student = `
 WITH EnrolledCourses AS (
@@ -57,26 +56,49 @@ WHERE
 `;
 
 export const update_student = (studentObject) => {
-    const setClause = Object.entries(studentObject)
-                            .filter(([key, value]) => value !== undefined && key != "matric_no")
-                            .map(([key, value]) => `${key} = '${value}'`)
-                            .join(', ');
-    console.log(setClause);
-    const query = 
-    `UPDATE students
+  const setClause = Object.entries(studentObject)
+    .filter(([key, value]) => value !== undefined && key != "matric_no")
+    .map(([key, value]) => `${key} = '${value}'`)
+    .join(", ");
+  console.log(setClause);
+  const query = `UPDATE students
     SET ${setClause}
     WHERE matric_no = $1;`;
-    console.log(query);
-    return query;
-}
+  console.log(query);
+  return query;
+};
 
 export const insert_student = (studentObject) => {
-    const keys = Object.keys(studentObject);
-    const values = Object.values(studentObject);
-    const query = `
-        INSERT INTO students (${keys.join(', ')})
-        VALUES (${values.map((value, index) => `$${index + 1}`).join(', ')})`;
-    
-    console.log(query);
-    return {query, values};
-}
+  const keys = Object.keys(studentObject);
+  const values = Object.values(studentObject);
+  const query = `
+        INSERT INTO students (${keys.join(", ")})
+        VALUES (${values.map((value, index) => `$${index + 1}`).join(", ")})`;
+
+  console.log(query);
+  return { query, values };
+};
+
+export const fetchStudentsWithParams = (studentObject) => {
+  const filteredStudentObject = Object.entries(studentObject)
+    .filter(([key, value]) => value !== undefined)
+    .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {});
+
+  const keys = Object.keys(filteredStudentObject);
+  const values = Object.values(filteredStudentObject);
+
+  // If all values are undefined, return an empty query
+  if (keys.length === 0) {
+    return { query: "", values: [] };
+  }
+
+  const conditions = keys
+    .map((key, index) => `${key} = $${index + 1}`)
+    .join(" AND ");
+
+  const query = `
+    SELECT * FROM students
+    WHERE ${conditions} AND isDeleted = false`;
+
+  return { query, values };
+};
