@@ -1,4 +1,4 @@
-import { fetchWithParams, insert_course } from "../pgdatabase/queries.js";
+import { fetchWithParams, generic_insert } from "../pgdatabase/queries.js";
 import { pool } from "../pgdatabase/index.js";
 
 export const verifyQueryParams = (req, res, next) => {
@@ -46,7 +46,7 @@ export const addNewCourse = async (req, res) => {
     return;
   }
   try {
-    let { query, values } = insert_course(courseObject);
+    let { query, values } = generic_insert(courseObject, "courses");
     console.log(values);
     const result = await pool.query(query, values);
     if (!result.rows || result.rowCount < 1) {

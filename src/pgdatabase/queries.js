@@ -108,11 +108,11 @@ export const fetchWithParams = (studentObject, tablename) => {
   return { query, values };
 };
 
-export const insert_course = (courseObject) => {
+export const generic_insert = (courseObject, tablename) => {
   const keys = Object.keys(courseObject);
   const values = Object.values(courseObject);
   const query = `
-        INSERT INTO courses (${keys.join(", ")})
+        INSERT INTO ${tablename} (${keys.join(", ")})
         VALUES (${values.map((value, index) => `$${index + 1}`).join(", ")})`;
 
   console.log(query);

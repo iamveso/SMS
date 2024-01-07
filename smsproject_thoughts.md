@@ -27,8 +27,8 @@
 
 #Department
 
-1. Api to add new departments (should be same as courses)
-2. Get a list of all departments
+1. Api to add new departments (should be same as courses) => done
+2. Get a list of all departments => done
 
 #Program
 1. Api to add new programs under departments (department_id is required)
