@@ -4,6 +4,9 @@
 --     ('English', 'GST101', 100, 2),
 --     ('Physics', 'Phy101', 100, 2);
 
-SELECT * FROM courses;
+-- SELECT * FROM courses;
 
 -- INSERT INTO courses VALUES ('Mathematics','MAT101', 100,2);
+
+SELECT * FROM courses
+    WHERE required_level = 100

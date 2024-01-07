@@ -1,7 +1,7 @@
 import { pool } from "../pgdatabase/index.js";
 import { StudentDetails as Student } from "../models/students.js";
 import {
-  fetchStudentsWithParams,
+  fetchWithParams,
   get_student,
   insert_student,
   soft_delete_student,
@@ -97,8 +97,8 @@ export const registerStudent = async (req, res) => {
     email: { value: req.body.email, writable: true, enumerable: true }
   });
   console.log(studentObject);
-  //TODO:Check that all values are not empty
-  if (!studentObject) {
+  //If keys are less than 8 or 1 key has a value of undefined
+  if (Object.entries(studentObject).length < 8 || Object.keys(studentObject).some(key => studentObject[key] === undefined)) {
     res.status(400).send("One or More fields Missing");
     return;
   }
@@ -144,7 +144,7 @@ export const getStudentByParams = async (req, res) => {
   }
   
   try {
-    let {query, values} = fetchStudentsWithParams(req.queryObj);
+    let {query, values} = fetchWithParams(req.queryObj, "students");
     console.log(query);
     console.log(values);
     const result = await pool.query(query, values);

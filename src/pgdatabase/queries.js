@@ -79,7 +79,7 @@ export const insert_student = (studentObject) => {
   return { query, values };
 };
 
-export const fetchStudentsWithParams = (studentObject) => {
+export const fetchWithParams = (studentObject, tablename) => {
   const filteredStudentObject = Object.entries(studentObject)
     .filter(([key, value]) => value !== undefined)
     .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {});
@@ -91,14 +91,30 @@ export const fetchStudentsWithParams = (studentObject) => {
   if (keys.length === 0) {
     return { query: "", values: [] };
   }
-
+  let query = "";
   const conditions = keys
     .map((key, index) => `${key} = $${index + 1}`)
     .join(" AND ");
-
-  const query = `
-    SELECT * FROM students
+  if (tablename == "students"){
+    query = `
+    SELECT * FROM ${tablename}
     WHERE ${conditions} AND isDeleted = false`;
+  }else{
+    query = `
+    SELECT * FROM ${tablename}
+    WHERE ${conditions}`;
+  }
 
   return { query, values };
 };
+
+export const insert_course = (courseObject) => {
+  const keys = Object.keys(courseObject);
+  const values = Object.values(courseObject);
+  const query = `
+        INSERT INTO courses (${keys.join(", ")})
+        VALUES (${values.map((value, index) => `$${index + 1}`).join(", ")})`;
+
+  console.log(query);
+  return { query, values };
+}

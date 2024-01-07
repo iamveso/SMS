@@ -22,7 +22,8 @@
 	TODO: Implement the ability to remove courses already taken and passed from this list
 
 #Courses
-1. Api to add new courses (Should be pretty straight forward since it doesnt rely on info from elsewhere)
+1. Api to add new courses (Should be pretty straight forward since it doesnt rely on info from elsewhere) => done
+2. Api to get courses by query params supplied (level) => done TODO: Add other ways of filtering courses, this will affect db schema
 
 #Department
 
