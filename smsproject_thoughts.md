@@ -31,8 +31,8 @@
 2. Get a list of all departments => done
 
 #Program
-1. Api to add new programs under departments (department_id is required)
-2. Get a list of all programs (if there is a query string get a list of programs under that department)
+1. Api to add new programs under departments (department_id is required) =>done
+2. Get a list of all programs (if there is a query string get a list of programs under that department) =>done
 
 
 #TODO: 
