@@ -35,6 +35,6 @@
 2. Get a list of all programs (if there is a query string get a list of programs under that department)
 
 
-#TODO:
+#TODO: 
 1. Begin to think about authorization and authentication anD how it will fit with this api (include guest auth)
 2. Put the db online and consider how migration will work[just to understand] (currently ooking at Flyway for this purpose)
