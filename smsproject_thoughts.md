@@ -18,8 +18,9 @@
 1. You should have gotten the student_id and current level department_id and program_id
 	This info will be used to figure out all the courses he is eligible to register for (level is important) should be arranged by level
 
-2. Register the student for the course which means it will be added to the enrollments db with the student_id and other info
+2. Register the student for the course which means it will be added to the enrollments db with the student_id and other info => done
 	TODO: Implement the ability to remove courses already taken and passed from this list
+3. Delete a course enrolled for a student => done
 
 #Courses
 1. Api to add new courses (Should be pretty straight forward since it doesnt rely on info from elsewhere) => done

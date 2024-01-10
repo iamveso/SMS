@@ -17,7 +17,7 @@ WITH EnrolledCourses AS (
     SELECT
         s.student_id,
         ARRAY_REMOVE(ARRAY_AGG(DISTINCT c.course_code), NULL) AS enrolled_courses,
-        SUM(DISTINCT c.units) AS reg_units
+        SUM(c.units) AS reg_units
     FROM
         students s
     JOIN
@@ -115,6 +115,5 @@ export const generic_insert = (courseObject, tablename) => {
         INSERT INTO ${tablename} (${keys.join(", ")})
         VALUES (${values.map((value, index) => `$${index + 1}`).join(", ")})`;
 
-  console.log(query);
   return { query, values };
 }
