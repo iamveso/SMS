@@ -150,7 +150,7 @@ export const getStudentByParams = async (req, res) => {
     const result = await pool.query(query, values);
     res.status(200).json(result.rows);
   } catch (error) {
-    res.status(400).send(error.detail || error.hint);
+    res.status(400).send(error);
     return;
   }
 }
